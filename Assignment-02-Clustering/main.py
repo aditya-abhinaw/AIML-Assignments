@@ -1,45 +1,54 @@
-import pandas as pd
+from pathlib import Path
 import matplotlib.pyplot as plt
+import pandas as pd
 from sklearn.cluster import KMeans
 
-# Read the dataset
-data = pd.read_csv("Assignment-02-Clustering/dataset.csv")
+# 1. Read the dataset (dynamically located relative to this file)
+dataset_path = Path(__file__).parent / "dataset.csv"
+data = pd.read_csv(dataset_path)
 
 print("Dataset:")
 print(data)
 
-# Taking two columns for clustering
-x = data[["AnnualIncome", "SpendingScore"]]
+# 2. Select features for clustering
+X = data[["AnnualIncome", "SpendingScore"]]
 
-# Creating K-Means model
+# 3. Create K-Means model
 model = KMeans(n_clusters=3, random_state=42, n_init=10)
 
-# Finding clusters
-data["Cluster"] = model.fit_predict(x)
+# 4. Predict clusters
+data["Cluster"] = model.fit_predict(X)
 
 print("\nClustered Data:")
 print(data)
 
-# Printing cluster centers
+# 5. Print cluster centers
 print("\nCluster Centers:")
 print(model.cluster_centers_)
 
-# Plotting the clusters
-plt.scatter(
+# 6. Plot the clusters and centroids
+plt.figure(figsize=(8, 6))
+scatter = plt.scatter(
     data["AnnualIncome"],
     data["SpendingScore"],
-    c=data["Cluster"]
+    c=data["Cluster"],
+    cmap="viridis",
+    label="Customers",
 )
 
 plt.scatter(
     model.cluster_centers_[:, 0],
     model.cluster_centers_[:, 1],
+    c="red",
     marker="X",
-    s=200
+    s=200,
+    edgecolor="black",
+    label="Centroids",
 )
 
 plt.xlabel("Annual Income")
 plt.ylabel("Spending Score")
 plt.title("Customer Clustering using K-Means")
-plt.grid()
+plt.legend()
+plt.grid(True)
 plt.show()
