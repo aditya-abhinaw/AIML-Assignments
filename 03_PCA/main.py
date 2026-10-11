@@ -30,7 +30,6 @@ print("\nTotal Variance Retained:")
 print(round(pca.explained_variance_ratio_.sum() * 100, 2), "%")
 
 plt.scatter(result["PC1"], result["PC2"])
-
 plt.xlabel("Principal Component 1")
 plt.ylabel("Principal Component 2")
 plt.title("PCA - Dimensionality Reduction")
