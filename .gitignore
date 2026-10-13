@@ -1,3 +1,7 @@
 venv/
 __pycache__/
 *.pyc
+
+09_Object_Detection/test_image.jpg
+09_Object_Detection/detected_image.jpg
+*.pt
